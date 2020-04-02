@@ -98,30 +98,31 @@ class BurgerBuilder extends Component {
         //a request to the firebase URL like '/order', its gonna create a node and store the data beneath that node
         
         //the order is about to get sent, so set loading to true
-        this.setState({loading: true});
-        const order = {
-            //in real app we have to recalculate the price in the server
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Jerry Leung',
-                address: {
-                    street: 'Harnett Avenue',
-                    suburb: 'Marrickville',
-                    city: 'Sydney'
-                },
-                email: 'luongvidu@gmail.com'
-            },
-            deliveryMethod : 'express'
-        }
-        axios.post('/orders.json', order)
-            //Either the response or error is back, we would want to stop display the loading spinner
-            //lecture 182 from 7:08 onwards explain why the spinner doesn't appear
-            .then(response => {
-                console.log(response);
-                this.setState({loading: false, purchasing: false});         
-            })
-            .catch(error => this.setState({loading: false, purchasing: false}));
+        // this.setState({loading: true});
+        // const order = {
+        //     //in real app we have to recalculate the price in the server
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice,
+        //     customer: {
+        //         name: 'Jerry Leung',
+        //         address: {
+        //             street: 'Harnett Avenue',
+        //             suburb: 'Marrickville',
+        //             city: 'Sydney'
+        //         },
+        //         email: 'luongvidu@gmail.com'
+        //     },
+        //     deliveryMethod : 'express'
+        // }
+        // axios.post('/orders.json', order)
+        //     //Either the response or error is back, we would want to stop display the loading spinner
+        //     //lecture 182 from 7:08 onwards explain why the spinner doesn't appear
+        //     .then(response => {
+        //         console.log(response);
+        //         this.setState({loading: false, purchasing: false});         
+        //     })
+        //     .catch(error => this.setState({loading: false, purchasing: false}));
+        this.props.history.push('/checkout');
     }
     render() {
         //disabledInfo on render because this code should ren (refresh/recalculate)
