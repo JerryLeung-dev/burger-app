@@ -122,7 +122,10 @@ class BurgerBuilder extends Component {
         //         this.setState({loading: false, purchasing: false});         
         //     })
         //     .catch(error => this.setState({loading: false, purchasing: false}));
-        console.log(this.state.ingredients);
+        
+        
+        //Sending query. Using encodeURIComponent and join to form a query
+        //Then use this.props.history.push and send it via search key
         const query= [];
         for (let i in this.state.ingredients) {
             //watch tutorial link about what is endoing URI and why need to do that
