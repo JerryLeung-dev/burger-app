@@ -122,7 +122,17 @@ class BurgerBuilder extends Component {
         //         this.setState({loading: false, purchasing: false});         
         //     })
         //     .catch(error => this.setState({loading: false, purchasing: false}));
-        this.props.history.push('/checkout');
+        console.log(this.state.ingredients);
+        const query= [];
+        for (let i in this.state.ingredients) {
+            //watch tutorial link about what is endoing URI and why need to do that
+            query.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]))
+        }
+        const queryString = query.join('&');
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        });
     }
     render() {
         //disabledInfo on render because this code should ren (refresh/recalculate)
