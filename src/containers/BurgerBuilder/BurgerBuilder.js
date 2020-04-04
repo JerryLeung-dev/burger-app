@@ -92,38 +92,7 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-        // alert('Continue!');
-        // Firebase uses same structure as MongoDB, we don't actually have
-        // tables, but we just have json nested structure and if you send 
-        //a request to the firebase URL like '/order', its gonna create a node and store the data beneath that node
-        
-        //the order is about to get sent, so set loading to true
-        // this.setState({loading: true});
-        // const order = {
-        //     //in real app we have to recalculate the price in the server
-        //     ingredients: this.state.ingredients,
-        //     price: this.state.totalPrice,
-        //     customer: {
-        //         name: 'Jerry Leung',
-        //         address: {
-        //             street: 'Harnett Avenue',
-        //             suburb: 'Marrickville',
-        //             city: 'Sydney'
-        //         },
-        //         email: 'luongvidu@gmail.com'
-        //     },
-        //     deliveryMethod : 'express'
-        // }
-        // axios.post('/orders.json', order)
-        //     //Either the response or error is back, we would want to stop display the loading spinner
-        //     //lecture 182 from 7:08 onwards explain why the spinner doesn't appear
-        //     .then(response => {
-        //         console.log(response);
-        //         this.setState({loading: false, purchasing: false});         
-        //     })
-        //     .catch(error => this.setState({loading: false, purchasing: false}));
-        
-        
+        // alert('Continue!');      
         //Sending query. Using encodeURIComponent and join to form a query
         //Then use this.props.history.push and send it via search key
         const query= [];
@@ -131,6 +100,7 @@ class BurgerBuilder extends Component {
             //watch tutorial link about what is endoing URI and why need to do that
             query.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]))
         }
+        query.push('price=' + this.state.totalPrice)
         const queryString = query.join('&');
         this.props.history.push({
             pathname: '/checkout',
