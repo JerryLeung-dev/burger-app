@@ -1,0 +1,29 @@
+.Input {
+    font-family: 'Open Sans Condensed', arial, sans;
+	width: 80%;
+	padding: 30px;
+	background: #FFFFFF;
+	margin: 0 auto;
+}
+
+.Label {
+    font-weight: bold;
+    /* To stay in its own row */
+    display: block; 
+    margin-bottom: 8px;
+}
+
+.InputElement {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	outline: none;
+	display: block;
+	width: 100%;
+	border: none;
+	border-bottom: 1px solid #ddd;
+	background: transparent;
+	font: 16px Arial, Helvetica, sans-serif;
+	height: 45px;
+}
+
