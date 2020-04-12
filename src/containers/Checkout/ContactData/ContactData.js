@@ -8,14 +8,62 @@ import Input from '../../../components/UI/Input/Input';
 
 class ContactData extends Component {
     state ={
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            postalCode: ''
-        },
-        loading: false
-    }
+        orderForm : {
+                name: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Your name'
+                    },
+                    value: ''
+                },
+                street: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Street'
+                    },
+                    value: ''
+                },
+                zipCode: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'ZIP CODE'
+                    },
+                    value: ''
+                },
+                country: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Country'
+                    },
+                    value: ''
+                },
+                email: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'email',
+                        placeholder: 'Email'
+                    },
+                    value: ''
+                },
+                deliveryMethod: {
+                    elementType: 'input',
+                    elementConfig: {
+                        options: [
+                            {value: 'fastest', displayValue: 'Fastest'},
+                            {value:"cheapest", displayValue:'cheapest'}
+                        ]
+                    },
+                    value: ''
+                },
+                deliveryMethod : 'express'
+            },
+            loading: false
+        }  
+
      orderHandler = (event) => {
         event.preventDefault();
          // Firebase uses same structure as MongoDB, we don't actually have
@@ -28,16 +76,7 @@ class ContactData extends Component {
             //in real app we have to recalculate the price in the server
             ingredients: this.props.ingredients,
             price: this.props.price,
-            customer: {
-                name: 'Jerry Leung',
-                address: {
-                    street: 'Harnett Avenue',
-                    suburb: 'Marrickville',
-                    city: 'Sydney'
-                },
-                email: 'luongvidu@gmail.com'
-            },
-            deliveryMethod : 'express'
+            
         }
 
         axios.post('/orders.json', order)
@@ -52,9 +91,10 @@ class ContactData extends Component {
         
      }
 
-    render(){
+    render() {
         let form = (
             <form onSubmit={this.orderHandler}>
+                <Input elementTypt="..." elementConfig="..." value="..." />
                 <Input inputtype="input" type='text' name='name' placeholder="Your name" />
                 <Input inputtype="input" type='email' name='email' placeholder="Your mail" />
                 <Input inputtype="input" type='text' name='street' placeholder="Your street" />
@@ -68,7 +108,7 @@ class ContactData extends Component {
         return (
             <div className={classes.ContactData}>
                 <h4>Enter your Contact Data</h4>
-                 {form}
+                {form}
             </div>
         );
     }
