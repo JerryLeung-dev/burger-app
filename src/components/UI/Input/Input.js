@@ -19,6 +19,7 @@ const input = (props) => {
                     {...props.elementConfig} 
                     alue={props.value}/>;
             break;
+        // case ('')
         default:
             inputElement = <input 
                                 className={classes.InputElement} 
