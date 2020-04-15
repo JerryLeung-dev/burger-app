@@ -54,10 +54,10 @@ class ContactData extends Component {
                     elementConfig: {
                         options: [
                             {value: 'fastest', displayValue: 'Fastest'},
-                            {value:"cheapest", displayValue:'cheapest'}
+                            {value:"cheapest", displayValue:'Cheapest'}
                         ]
                     },
-                    value: ''
+                    value: 'fastest'
                 },
             },
             loading: false
@@ -71,13 +71,25 @@ class ContactData extends Component {
      
         //the order is about to get sent, so set loading to true
         this.setState({loading: true});
-        const order = {
-            //in real app we have to recalculate the price in the server
-            ingredients: this.props.ingredients,
-            price: this.props.price,
+        //Add form data to the submission object
+        // const order = {
+        //     //in real app we have to recalculate the price in the server
+        //     ingredients: this.props.ingredients,
+        //     price: this.props.price,
             
-        }
+        // }
 
+        const formData = {};
+        for (let formElementIdentifier in this.state.orderForm) {
+            formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier]
+        }
+        const order = {
+                //in real app we have to recalculate the price in the server
+                ingredients: this.props.ingredients,
+                price: this.props.price,
+                orderData: formData
+        }
+        console.log(order);
         axios.post('/orders.json', order)
         //     //Either the response or error is back, we would want to stop display the loading spinner
         //     //lecture 182 from 7:08 onwards explain why the spinner doesn't appear
@@ -130,7 +142,7 @@ class ContactData extends Component {
                         changed={(event) => this.inputChangeHandler(event, formElement.id)}
                     />
                 ))}
-                <Button btnType="Success" onClick={this.orderHandler}>ORDER</Button>
+                <Button btnType="Success">ORDER</Button>
             </form>
         );
         if(this.state.loading) {
