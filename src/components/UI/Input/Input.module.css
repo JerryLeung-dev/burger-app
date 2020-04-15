@@ -27,3 +27,7 @@
 	height: 45px;
 }
 
+.Invalid {
+	border-bottom: 2px solid #ff0000;
+}
+
