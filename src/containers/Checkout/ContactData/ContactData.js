@@ -15,7 +15,11 @@ class ContactData extends Component {
                         type: 'text',
                         placeholder: 'Your name'
                     },
-                    value: ''
+                    value: '',
+                    validation: {
+                        required: true
+                    },
+                    valid : false
                 },
                 street: {
                     elementType: 'input',
@@ -23,7 +27,11 @@ class ContactData extends Component {
                         type: 'text',
                         placeholder: 'Street'
                     },
-                    value: ''
+                    value: '',
+                    validation: {
+                        required: true
+                    },
+                    valid: false
                 },
                 zipCode: {
                     elementType: 'input',
@@ -31,7 +39,13 @@ class ContactData extends Component {
                         type: 'text',
                         placeholder: 'ZIP CODE'
                     },
-                    value: ''
+                    value: '',
+                    validation: {
+                        required: true,
+                        minLength: 5,
+                        maxLength: 5
+                    },
+                    valid: false
                 },
                 country: {
                     elementType: 'input',
@@ -39,7 +53,11 @@ class ContactData extends Component {
                         type: 'text',
                         placeholder: 'Country'
                     },
-                    value: ''
+                    value: '',
+                    validation: {
+                        required: true
+                    },
+                    valid: false
                 },
                 email: {
                     elementType: 'input',
@@ -47,7 +65,11 @@ class ContactData extends Component {
                         type: 'email',
                         placeholder: 'Email'
                     },
-                    value: ''
+                    value: '',
+                    validation: {
+                        required: true
+                    },
+                    valid: false
                 },
                 deliveryMethod: {
                     elementType: 'select',
@@ -101,6 +123,29 @@ class ContactData extends Component {
             .catch(error => this.setState({loading: false}));
         
      }
+    
+    checkValidity(value, rules) {
+        let isValid = false;
+        
+    // So now isValid is updated to True or false 
+    //depending on the check if the trimmed value is unequal
+    // to an empty string
+
+        if(rules.required) {
+            //Directly set the condition to the boolean value---> new THING
+            isValid = value.trim() !== '';
+        }
+
+        if(rules.minLength) {
+            isValid = value.length>= rules.minlength
+        }
+
+        if(rules.maxLength) {
+            isValid = value.length <= rules.maxlength
+        }
+
+        return isValid;
+    }
     //Watch lecture 240 to know better of how to deeply clone an aboject
     
     //inputIdentifiers are the keys of orderForm, check line 120
@@ -116,6 +161,8 @@ class ContactData extends Component {
             ...updatedOrderForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+        console.log(updatedFormElement.valid);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
         this.setState({orderForm: updatedOrderForm});
         // console.log(this.state.orderForm);
