@@ -89,6 +89,26 @@ class ContactData extends Component {
             .catch(error => this.setState({loading: false}));
         
      }
+    //Watch lecture 240 to know better of how to deeply clone an aboject
+    
+    //inputIdentifiers are the keys of orderForm, check line 120
+    inputChangeHandler = (event, inputIdentifier) => {
+        //This does not create a deep clone because we got nested objects and they would not be cloned deeply
+        //but there we just copy the pointer to them and hence when we change something, it will still mutate the original state
+        const updatedOrderForm ={
+            ...this.state.orderForm
+        };
+        //so we have to also copy the properties inside the selected orderForm element deeply
+        //(elementType, elementConfig, value <---- we need this one)
+        const updatedFormElement = {
+            ...updatedOrderForm[inputIdentifier]
+        };
+        updatedFormElement.value = event.target.value;
+        updatedOrderForm[inputIdentifier] = updatedFormElement;
+        this.setState({orderForm: updatedOrderForm});
+        // console.log(this.state.orderForm);
+
+    }
 
     render() {
         const formElementsArray = [];
@@ -98,7 +118,7 @@ class ContactData extends Component {
                 config: this.state.orderForm[key]
             });
         }
-        console.log(formElementsArray);
+        // console.log(formElementsArray);
         let form = (
             <form onSubmit={this.orderHandler}>
                 {formElementsArray.map(formElement => (
@@ -107,6 +127,7 @@ class ContactData extends Component {
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
+                        changed={(event) => this.inputChangeHandler(event, formElement.id)}
                     />
                 ))}
                 <Button btnType="Success" onClick={this.orderHandler}>ORDER</Button>
