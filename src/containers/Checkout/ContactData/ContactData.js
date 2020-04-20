@@ -91,11 +91,11 @@ class ContactData extends Component {
                         ]
                     },
                     value: 'fastest',
-                    validation: {
-                        required: false
-                    }
+                    validation: {},
+                    valid: true
                 },
             },
+            formIsValid: false,
             loading: false,
             errorMessage:[]
         }  
@@ -205,8 +205,14 @@ class ContactData extends Component {
         updatedFormElement.touched = true;
         // console.log(updatedFormElement.valid);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
-        this.setState({orderForm: updatedOrderForm});
+        
+
+        let formIsValid = true;
+        for (let inputIdentifier in updatedOrderForm){
+            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+        }
         // console.log(this.state.orderForm);
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
 
     }
 
@@ -234,7 +240,7 @@ class ContactData extends Component {
                         message = {this.state.errorMessage}                        
                     />
                 ))}
-                <Button btnType="Success">ORDER</Button>
+                <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
             </form>
         );
         if(this.state.loading) {

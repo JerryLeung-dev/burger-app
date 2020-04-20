@@ -34,3 +34,8 @@
     background-color: #A61E08 ;
 }
 
+.Button:disabled {
+    background-color:#b8ddc9;
+    /* color:#ccc; */
+    cursor: not-allowed;
+}
