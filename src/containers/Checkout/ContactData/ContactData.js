@@ -6,7 +6,13 @@ import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 
+
 class ContactData extends Component {
+    errorMessage = [
+        "This is required field",
+        "Minimum length 5",
+        "Maximum length 5"
+    ];
     state ={
         orderForm : {
                 name: {
@@ -84,12 +90,17 @@ class ContactData extends Component {
                             {value:"cheapest", displayValue:'Cheapest'}
                         ]
                     },
-                    value: 'fastest'
+                    value: 'fastest',
+                    validation: {
+                        required: false
+                    }
                 },
             },
-            loading: false
+            loading: false,
+            errorMessage:[]
         }  
 
+        
      orderHandler = (event) => {
         event.preventDefault();
          // Firebase uses same structure as MongoDB, we don't actually have
@@ -116,7 +127,7 @@ class ContactData extends Component {
                 price: this.props.price,
                 orderData: formData
         }
-        console.log(order);
+        // console.log(order);
         axios.post('/orders.json', order)
         //     //Either the response or error is back, we would want to stop display the loading spinner
         //     //lecture 182 from 7:08 onwards explain why the spinner doesn't appear
@@ -129,9 +140,22 @@ class ContactData extends Component {
         
      }
     
+    assignErrorMessage(validBoolean, messageList, message){
+        if(validBoolean === false) {
+            if(messageList.indexOf(message) == -1){
+                messageList.push(message); 
+            }
+        }
+        if(validBoolean === true) {
+            if(messageList.indexOf(message) !== -1){
+                messageList.splice(messageList.indexOf(message), 1);
+            }
+        }
+        this.setState({errorMessage: messageList});
+    } 
+
     checkValidity(value, rules) {
         let isValid = true;
-        
     // So now isValid is updated to True or false 
     //depending on the check if the trimmed value is unequal
     // to an empty string
@@ -144,19 +168,22 @@ class ContactData extends Component {
     // this in every rule, then just one rule resolving to true alone won't do the trick,
     // all the rules now have to resolve to true.
 
+        let errorMessage = [...this.state.errorMessage];
         if(rules.required) {
             //Directly set the condition to the boolean value---> new THING
             isValid = value.trim() !== '' && isValid;
+            this.assignErrorMessage(isValid, errorMessage, "This is a required field");
         }
 
         if(rules.minLength) {
             isValid = value.length >= rules.minLength && isValid;
+            this.assignErrorMessage(isValid, errorMessage, "Minimum 5 character");
         }
 
         if(rules.maxLength) {
             isValid = value.length <= rules.maxLength && isValid;
+            this.assignErrorMessage(isValid, errorMessage, "Maximum 5 character");   
         }
-
         return isValid;
     }
     //Watch lecture 240 to know better of how to deeply clone an aboject
@@ -176,7 +203,7 @@ class ContactData extends Component {
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
-        console.log(updatedFormElement.valid);
+        // console.log(updatedFormElement.valid);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
         this.setState({orderForm: updatedOrderForm});
         // console.log(this.state.orderForm);
@@ -200,10 +227,11 @@ class ContactData extends Component {
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
+                        changed={(event) => this.inputChangeHandler(event, formElement.id)}
                         invalid={!formElement.config.valid}
                         shouldValidate={formElement.config.validation}
                         touched ={formElement.config.touched}
-                        changed={(event) => this.inputChangeHandler(event, formElement.id)}
+                        message = {this.state.errorMessage}                        
                     />
                 ))}
                 <Button btnType="Success">ORDER</Button>
