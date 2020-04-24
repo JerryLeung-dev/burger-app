@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 
 import axios from '../../axios-orders';
 import Burger from '../../components/Burger/Burger';
@@ -8,6 +9,7 @@ import OrderSummary from '../../components/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
+import * as actionTypes from '../../store/actions';
 const INGREDIENT_PRICES = {
     salad: 0.5,
     cheese: 0.4,
@@ -22,8 +24,6 @@ class BurgerBuilder extends Component {
     // }
 
     state = {
-        ingredients: null,
-        totalPrice: 4,
         purchasable: false,
         purchasing: false,
         loading: false,
@@ -40,6 +40,7 @@ class BurgerBuilder extends Component {
             this.setState({error:true});
         });
     }
+    
     updatePurchaseState(ingredients) {
         const sum = Object.keys(ingredients)
                     .map(igKey => {
@@ -155,4 +156,17 @@ class BurgerBuilder extends Component {
     }
 }
 
-export default withErrorHandler(BurgerBuilder, axios)
+const matchStateToProps = state => {
+    return {
+        ingredients: state.ingredients,
+        totalPrice: state.totalPrice
+    }
+}
+
+const matchDispatchToProps = dispatch => {
+    return {
+        onAddIngredientHandler: () => dispatch({type: actionTypes.ADD_INGREDIENT}),
+        onRemoveIngredientHandler: () => dispatch({type: actionTypes.REMOVE_INGREDIENT})
+    }
+}
+export default connect(matchStateToProps,matchDispatchToProps)(()=>withErrorHandler(BurgerBuilder, axios));
