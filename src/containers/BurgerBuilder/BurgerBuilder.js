@@ -59,18 +59,10 @@ class BurgerBuilder extends Component {
         // alert('Continue!');      
         //Sending query. Using encodeURIComponent and join to form a query
         //Then use this.props.history.push and send it via search key
-        const query= [];
-        for (let i in this.state.ingredients) {
-            //watch tutorial link about what is endoing URI and why need to do that
-            query.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]))
-        }
-        query.push('price=' + this.state.totalPrice)
-        const queryString = query.join('&');
-        this.props.history.push({
-            pathname: '/checkout',
-            search: '?' + queryString
-        });
+
+        this.props.history.push('/checkout');
     }
+    
     render() {
         //disabledInfo on render because this code should ren (refresh/recalculate)
         //everytime the render method invokes
