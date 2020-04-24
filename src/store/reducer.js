@@ -4,7 +4,7 @@ const initialState = {
     ingredients : {
         salad: 0,
         bacon: 0,
-        chesse: 0,
+        cheese: 0,
         meat: 0
     },
     totalPrice: 4
@@ -13,7 +13,7 @@ const initialState = {
 //We don't need break statement because we will return the case anyway,
 //so the code executions won't continue in this function.
 const reducer = ( state = initialState, action) => {
-    switch (actionTypes){
+    switch (action.type){
         //be aware of the nesting object when copying
         case actionTypes.ADD_INGREDIENT:
             return {
@@ -23,6 +23,7 @@ const reducer = ( state = initialState, action) => {
                     //Watch tutorial folder set dynamic property keys
                     [action.ingredientName]:state.ingredients[action.ingredientName] + 1
                 }
+                
             };
         case actionTypes.REMOVE_INGREDIENT:
             return {
