@@ -14,13 +14,24 @@ const initialState = {
 //so the code executions won't continue in this function.
 const reducer = ( state = initialState, action) => {
     switch (actionTypes){
+        //be aware of the nesting object when copying
         case actionTypes.ADD_INGREDIENT:
             return {
-
+                ...state,
+                ingredients : {
+                    ...state.ingredients,
+                    //Watch tutorial folder set dynamic property keys
+                    [action.ingredientName]:state.ingredients[action.ingredientName] + 1
+                }
             };
         case actionTypes.REMOVE_INGREDIENT:
             return {
-
+                ...state,
+                ingredients : {
+                    ...state.ingredients,
+                    //Watch tutorial folder set dynamic property keys
+                    [action.ingredientName]:state.ingredients[action.ingredientName] -1
+                }
             };
         default:
             return state;
