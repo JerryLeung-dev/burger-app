@@ -15,41 +15,54 @@ const INGREDIENT_PRICES = {
     bacon: 0.7
 }
 
+const addIngredient = (state, action) => {
+    const updatedIngredient = updateObject({[action.ingredientName]:state.ingredients[action.ingredientName] + 1 }) 
+        const updatedIngredients = updateObject(state.ingredients,updatedIngredient)
+        const  updatedState = {
+            ingredients : updatedIngredients,
+            totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]   
+        } 
+        return updateObject(state, updatedState);
+}
+
+const removeIngredient = (state, action) => {
+    const updatedIng = updateObject({[action.ingredientName]:state.ingredients[action.ingredientName] - 1 }) 
+            const updatedIngs = updateObject(state.ingredients,updatedIng)
+            const  updatedSt = {
+                ingredients : updatedIngs,
+                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+            }
+    return updateObject(state, updatedSt);
+}
+
+const setIngredients = (state, action) => {
+    return updateObject(state, {
+        ingredients: {
+            salad: action.ingredients.salad,
+            bacon: action.ingredients.bacon,
+            cheese: action.ingredients.cheese,
+            meat: action.ingredients.meat
+        },
+        totalPrice: 4,
+    })
+}
+
+const fetchIngredientsFailed = (state, action) => {
+    return updateObject(state, {error: true});
+}
 //We don't need break statement because we will return the case anyway,
 //so the code executions won't continue in this function.
 const reducer = ( state = initialState, action) => {
     switch (action.type){
         //be aware of the nesting object when copying
         case actionTypes.ADD_INGREDIENT:
-           const updatedIngredient = updateObject({[action.ingredientName]:state.ingredients[action.ingredientName] + 1 }) 
-           const updatedIngredients = updateObject(state.ingredients,updatedIngredient)
-           const  updatedState = {
-               ingredients : updatedIngredients,
-               totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
-           }
-           return updateObject(state, updatedState);
+           return addIngredient(state,action);
         case actionTypes.REMOVE_INGREDIENT:
-            const updatedIng = updateObject({[action.ingredientName]:state.ingredients[action.ingredientName] - 1 }) 
-            const updatedIngs = updateObject(state.ingredients,updatedIng)
-            const  updatedSt = {
-                ingredients : updatedIngs,
-                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
-            }
-            return updateObject(state, updatedState);
+           return removeIngredient(state,action); 
         case actionTypes.SET_INGREDIENTS:
-
-            return updateObject(state, {
-                ingredients: {
-                    salad: action.ingredients.salad,
-                    bacon: action.ingredients.bacon,
-                    cheese: action.ingredients.cheese,
-                    meat: action.ingredients.meat
-                },
-                totalPrice: 4,
-            })
-            
+            return setIngredients(state, action);             
         case actionTypes.FETCH_INGREDIENTS_FAILED:
-            return updateObject(state, {error: true});
+            return fetchIngredientsFailed(state, action);
         default:
             return state;
 
