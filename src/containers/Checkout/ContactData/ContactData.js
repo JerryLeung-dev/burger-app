@@ -8,6 +8,12 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 
 
+//Import hoc error Handler to handle axios request and response.
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from '../../../store/actions/index';
+
+
+
 class ContactData extends Component {
     errorMessage = [
         "This is required field",
@@ -97,7 +103,6 @@ class ContactData extends Component {
                 },
             },
             formIsValid: false,
-            loading: false,
             errorMessage:[]
         }  
 
@@ -109,7 +114,6 @@ class ContactData extends Component {
         //a request to the firebase URL like '/order', its gonna create a node and store the data beneath that node
      
         //the order is about to get sent, so set loading to true
-        this.setState({loading: true});
         //Add form data to the submission object
         // const order = {
         //     //in real app we have to recalculate the price in the server
@@ -129,16 +133,16 @@ class ContactData extends Component {
                 orderData: formData
         }
         // console.log(order);
-        axios.post('/orders.json', order)
-        //     //Either the response or error is back, we would want to stop display the loading spinner
-        //     //lecture 182 from 7:08 onwards explain why the spinner doesn't appear
-            .then(response => {
-            //    console.log(response);
-               this.setState({loading: false});
-               this.props.history.push('/')
-            })
-            .catch(error => this.setState({loading: false}));
-        
+        // axios.post('/orders.json', order)
+        // //     //Either the response or error is back, we would want to stop display the loading spinner
+        // //     //lecture 182 from 7:08 onwards explain why the spinner doesn't appear
+        //     .then(response => {
+        //     //    console.log(response);
+        //        this.setState({loading: false});
+        //        this.props.history.push('/')
+        //     })
+        //     .catch(error => this.setState({loading: false}));
+        this.props.onBurgerOrder(order);
      }
     
     assignErrorMessage(validBoolean, messageList, message){
@@ -263,4 +267,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ContactData)
+const mapDispatchToProps = dispatch => {
+    return dispatch => {
+        onBurgerOrder: (orderData) => dispatch(actions.purchaseBurgerStart(orderData));
+    }
+}
+
+export default connect(mapStateToProps)(withErrorHandler(ContactData, axios))
