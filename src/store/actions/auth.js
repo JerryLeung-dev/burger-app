@@ -40,8 +40,9 @@ export const auth = (email, password, isSignUp) => {
                     console.log(response.data);
                 })
                 .catch(err =>{
-                    dispatch(authFail(err))
-                    console.log(err);
+                    dispatch(authFail(err.response.data.error.message))
+                    //err here is an object that wraps response. therefore access by err.response
+                    console.log(err.response.data.error.message);
                 })
     }
 }
