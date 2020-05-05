@@ -7,10 +7,10 @@ const input = (props) => {
     const inputClasses = [classes.InputElement];
     // console.log(validationMessage);
 
-    if (props.invalid && props.shouldValidate && props.touched) {
+    if (props.invalid && props.touched) {
         inputClasses.push(classes.Invalid);
         // validationMessage = <p>{props.message.join(' ')}</p>
-        validationMessage = <p className={classes.ValidationMessage}>{props.message.join(' | ')}</p>
+        validationMessage = <p className={classes.ValidationMessage}>Please enter a valid {props.message}</p>
     }
 
     switch (props.elementType) {

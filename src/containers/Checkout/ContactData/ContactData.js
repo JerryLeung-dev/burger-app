@@ -15,96 +15,92 @@ import * as actions from '../../../store/actions/index';
 
 
 class ContactData extends Component {
-    errorMessage = [
-        "This is required field",
-        "Minimum length 5",
-        "Maximum length 5"
-    ];
-    state ={
-        orderForm : {
-                name: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'text',
-                        placeholder: 'Your name'
-                    },
-                    value: '',
-                    validation: {
-                        required: true
-                    },
-                    valid : false,
-                    touched: false
+    state = {
+        orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your Name'
                 },
-                street: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'text',
-                        placeholder: 'Street'
-                    },
-                    value: '',
-                    validation: {
-                        required: true
-                    },
-                    valid: false,
-                    touched: false
+                value: '',
+                validation: {
+                    required: true
                 },
-                zipCode: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'text',
-                        placeholder: 'ZIP CODE'
-                    },
-                    value: '',
-                    validation: {
-                        required: true,
-                        minLength: 5,
-                        maxLength: 5
-                    },
-                    valid: false,
-                    touched: false
-                },
-                country: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'text',
-                        placeholder: 'Country'
-                    },
-                    value: '',
-                    validation: {
-                        required: true
-                    },
-                    valid: false,
-                    touched: false
-                },
-                email: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'email',
-                        placeholder: 'Email'
-                    },
-                    value: '',
-                    validation: {
-                        required: true
-                    },
-                    valid: false,
-                    touched: false
-                },
-                deliveryMethod: {
-                    elementType: 'select',
-                    elementConfig: {
-                        options: [
-                            {value: 'fastest', displayValue: 'Fastest'},
-                            {value:"cheapest", displayValue:'Cheapest'}
-                        ]
-                    },
-                    value: 'fastest',
-                    validation: {},
-                    valid: true
-                },
+                valid: false,
+                touched: false
             },
-            formIsValid: false,
-            errorMessage:[]
-        }  
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Street'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+            zipCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'ZIP Code'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5,
+                    isNumeric: true
+                },
+                valid: false,
+                touched: false
+            },
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Country'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    placeholder: 'Your E-Mail'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    isEmail: true
+                },
+                valid: false,
+                touched: false
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'fastest', displayValue: 'Fastest'},
+                        {value: 'cheapest', displayValue: 'Cheapest'}
+                    ]
+                },
+                value: '',
+                validation: {},
+                valid: true
+            }
+        },
+        formIsValid: false,
+    }
 
         
      orderHandler = (event) => {
@@ -145,22 +141,21 @@ class ContactData extends Component {
         this.props.onBurgerOrder(order);
      }
     
-    assignErrorMessage(validBoolean, messageList, message){
-        if(validBoolean === false) {
-            if(messageList.indexOf(message) == -1){
-                messageList.push(message); 
-            }
-        }
-        if(validBoolean === true) {
-            if(messageList.indexOf(message) !== -1){
-                messageList.splice(messageList.indexOf(message), 1);
-            }
-        }
-        this.setState({errorMessage: messageList});
-    } 
+    // assignErrorMessage(validBoolean, messageList, message){
+    //     if(validBoolean === false) {
+    //         if(messageList.indexOf(message) == -1){
+    //             messageList.push(message); 
+    //         }
+    //     }
+    //     if(validBoolean === true) {
+    //         if(messageList.indexOf(message) !== -1){
+    //             messageList.splice(messageList.indexOf(message), 1);
+    //         }
+    //     }
+    //     this.setState({errorMessage: messageList});
+    // } 
 
     checkValidity(value, rules) {
-        let isValid = true;
     // So now isValid is updated to True or false 
     //depending on the check if the trimmed value is unequal
     // to an empty string
@@ -173,21 +168,30 @@ class ContactData extends Component {
     // this in every rule, then just one rule resolving to true alone won't do the trick,
     // all the rules now have to resolve to true.
 
-        let errorMessage = [...this.state.errorMessage];
-        if(rules.required) {
-            //Directly set the condition to the boolean value---> new THING
-            isValid = value.trim() !== '' && isValid;
-            this.assignErrorMessage(isValid, errorMessage, "This is a required field");
+    let isValid = true;
+    if (!rules) {
+        return true;
+    }
+    
+    if (rules.required) {
+        isValid = value.trim() !== '' && isValid;
+    }
+
+    if (rules.minLength) {
+        isValid = value.length >= rules.minLength && isValid
+    }
+
+    if (rules.maxLength) {
+        isValid = value.length <= rules.maxLength && isValid
+    }
+        if (rules.isEmail) {
+            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            isValid = pattern.test(value) && isValid
         }
 
-        if(rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;
-            this.assignErrorMessage(isValid, errorMessage, "Minimum 5 character");
-        }
-
-        if(rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-            this.assignErrorMessage(isValid, errorMessage, "Maximum 5 character");   
+        if (rules.isNumeric) {
+            const pattern = /^\d+$/;
+            isValid = pattern.test(value) && isValid
         }
         return isValid;
     }
@@ -242,7 +246,7 @@ class ContactData extends Component {
                         invalid={!formElement.config.valid}
                         shouldValidate={formElement.config.validation}
                         touched ={formElement.config.touched}
-                        message = {this.state.errorMessage}                        
+                        message = {formElement.id}                        
                     />
                 ))}
                 <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
