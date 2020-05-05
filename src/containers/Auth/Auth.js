@@ -39,7 +39,8 @@ class Auth extends Component {
                 touched: false
             }
         },
-        formIsValid: false
+        formIsValid: false,
+        isSignUp: false
     }
 
     inputChangeHandler = (event, controlName) => {
@@ -96,9 +97,16 @@ class Auth extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
+        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignUp);
     }
     
+    signUpHandler = () => {
+        this.setState({isSignUp: true});
+    }
+
+    signInHandler = () => {
+        this.setState({isSignUp: false});
+    }
     render() {
         const formElementsArray = [];
         for(let key in this.state.controls) {
@@ -123,7 +131,12 @@ class Auth extends Component {
                         message = {formElement.id}                        
                     />
                 ))}
-                <Button btnType="Success" disabled={!this.state.formIsValid}>Login</Button>
+                <Button btnType="Success" 
+                        disabled={!this.state.formIsValid} 
+                        clicked={this.signUpHandler}>Sign Up</Button>
+                <Button btnType="Danger" 
+                        disabled={!this.state.formIsValid}
+                        clicked={this.signInHandler}>Sign In</Button>
             </form>
         );
         return (
@@ -136,7 +149,7 @@ class Auth extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth : (email, password) => dispatch(actions.auth(email, password))
+        onAuth : (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp))
     }
 }
 

@@ -26,7 +26,7 @@
 }
 
 .Danger {
-    background-color:salmon ;
+    background-color:rgb(238, 85, 68) ;
     color:white;
 }
 
@@ -38,4 +38,8 @@
     background-color:#b8ddc9;
     /* color:#ccc; */
     cursor: not-allowed;
+}
+
+.Danger:disabled {
+    background-color:salmon;
 }
