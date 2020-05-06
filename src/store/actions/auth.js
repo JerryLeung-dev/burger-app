@@ -49,7 +49,7 @@ export const auth = (email, password, isSignUp) => {
         axios.post(url, authData)
                 .then(response => {
                     dispatch(authSuccess(response.data.idToken, response.data.localId));
-                    dispatch(authLogout(response.data.expiresIn));
+                    dispatch(checkAuthTimeout(response.data.expiresIn));
                     console.log(response.data);
                 })
                 .catch(err =>{

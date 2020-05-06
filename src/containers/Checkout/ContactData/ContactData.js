@@ -138,7 +138,7 @@ class ContactData extends Component {
         //        this.props.history.push('/')
         //     })
         //     .catch(error => this.setState({loading: false}));
-        this.props.onBurgerOrder(order);
+        this.props.onBurgerOrder(order, this.props.token);
      }
     
     // assignErrorMessage(validBoolean, messageList, message){
@@ -268,13 +268,14 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.idToken
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onBurgerOrder: (orderData) => dispatch(actions.purchaseBurger(orderData))
+        onBurgerOrder: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token))
     }
 }
 
