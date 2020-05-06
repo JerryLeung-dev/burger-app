@@ -69,8 +69,6 @@ export const fetchOrders = (token) => {
                             ...response.data[key],
                             id: key
                        });
-                    console.log(response.data);
-                    console.log(fetchedOrders);
                     }
                     dispatch(fetchOrderSuccess(fetchedOrders));
                 })

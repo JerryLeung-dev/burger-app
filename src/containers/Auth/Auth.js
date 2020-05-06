@@ -139,10 +139,10 @@ class Auth extends Component {
                         />
                     ))}
                     <Button btnType="Success" 
-                            disabled={!this.state.formIsValid} 
+                            // disabled={!this.state.formIsValid} 
                             clicked={this.signUpHandler}>Sign Up</Button>
                     <Button btnType="Danger" 
-                            disabled={!this.state.formIsValid}
+                            // disabled={!this.state.formIsValid}
                             clicked={this.signInHandler}>Sign In</Button>
                 </form>
             );
