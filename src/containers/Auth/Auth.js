@@ -8,6 +8,7 @@ import classes from './Auth.module.css';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 import * as actions from '../../store/actions/index';
+import { updateObject } from '../../shared/utility';
 
 
 class Auth extends Component {
@@ -49,27 +50,20 @@ class Auth extends Component {
     inputChangeHandler = (event, controlName) => {
         //This does not create a deep clone because we got nested objects and they would not be cloned deeply
         //but there we just copy the pointer to them and hence when we change something, it will still mutate the original state
-        const updateControlsForm ={
-            ...this.state.controls
-        };
-        //so we have to also copy the properties inside the selected orderForm element deeply
-        //(elementType, elementConfig, value <---- we need this one)
-        const updatedFormElement = {
-            ...updateControlsForm[controlName]
-        };
-        updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-        updatedFormElement.touched = true;
-        // console.log(updatedFormElement.valid);
-        updateControlsForm[controlName] = updatedFormElement;
-        
+        const updatedControls = updateObject(this.state.controls, {
+            [controlName] : updateObject(this.state.controls[controlName], {
+                value: event.target.value,
+                valid: this.checkValidity( event.target.value, this.state.controls[controlName].validation),
+                touched: true
+            })
+        });       
 
         let formIsValid = true;
-        for (let controlName in updateControlsForm){
-            formIsValid = updateControlsForm[controlName].valid && formIsValid;
+        for (let controlName in updatedControls){
+            formIsValid = updatedControls[controlName].valid && formIsValid;
         }
         // console.log(this.state.orderForm);
-        this.setState({controls: updateControlsForm, formIsValid: formIsValid});
+        this.setState({controls: updatedControls, formIsValid: formIsValid});
     }
 
     checkValidity(value, rules) {    

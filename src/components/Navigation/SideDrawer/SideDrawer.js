@@ -14,7 +14,7 @@ const sideDrawer = (props) => {
     return (
         <>
             <Backdrop show={props.open} clicked={props.closed}/>
-            <div className ={attachedClasses.join(' ')}>
+            <div className ={attachedClasses.join(' ')} onClick={props.closed}>
                 {/* Wrap the Logo with a div, assign the class 
                     inside the component which import Logo  */}
                 <div className={classes.Logo}>

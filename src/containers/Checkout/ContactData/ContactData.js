@@ -11,6 +11,7 @@ import Input from '../../../components/UI/Input/Input';
 //Import hoc error Handler to handle axios request and response.
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../../store/actions/index';
+import { updateObject } from '../../../shared/utility';
 
 
 
@@ -126,7 +127,8 @@ class ContactData extends Component {
                 //in real app we have to recalculate the price in the server
                 ingredients: this.props.ings,
                 price: this.props.price,
-                orderData: formData
+                orderData: formData,
+                userId: this.props.userId
         }
         // console.log(order);
         // axios.post('/orders.json', order)
@@ -201,21 +203,17 @@ class ContactData extends Component {
     inputChangeHandler = (event, inputIdentifier) => {
         //This does not create a deep clone because we got nested objects and they would not be cloned deeply
         //but there we just copy the pointer to them and hence when we change something, it will still mutate the original state
-        const updatedOrderForm ={
-            ...this.state.orderForm
-        };
         //so we have to also copy the properties inside the selected orderForm element deeply
         //(elementType, elementConfig, value <---- we need this one)
-        const updatedFormElement = {
-            ...updatedOrderForm[inputIdentifier]
-        };
-        updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-        updatedFormElement.touched = true;
-        // console.log(updatedFormElement.valid);
-        updatedOrderForm[inputIdentifier] = updatedFormElement;
-        
-
+        const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], {
+            value: event.target.value,
+            valid: this.checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+            touched:  true
+        });
+        const updatedOrderForm = updateObject(this.state.orderForm,{
+            [inputIdentifier] : updatedFormElement
+        })
+       // console.log(updatedFormElement.valid);
         let formIsValid = true;
         for (let inputIdentifier in updatedOrderForm){
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
@@ -269,7 +267,8 @@ const mapStateToProps = state => {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
         loading: state.order.loading,
-        token: state.auth.idToken
+        token: state.auth.idToken,
+        userId: state.auth.userId
     }
 }
 
