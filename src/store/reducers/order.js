@@ -43,15 +43,12 @@ const fetchOrderFail = (state, action) => {
 }
 
 const fetchOrderSuccess = (state, action) => {
-    console.log(action.orders)
     return updateObject(state, {
         orders: action.orders,
         loading: false
     });
 }
-// const addIngredient = (state, action) => {
-//     return 
-// }
+
 const reducer = (state = initialState, action) => {
     switch (action.type){
         case actionTypes.PURCHASE_BURGER_SUCCESS:

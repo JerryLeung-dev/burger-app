@@ -41,26 +41,26 @@ export const purchaseInit = () => {
 //Orders 
 export const fetchOrderStart = () => {
     return {
-        type: actionTypes.FETCH_ORDER_START
+        type: actionTypes.FETCH_ORDER_START //set state loading: true
     }
 }
 
 export const fetchOrderSuccess = (orders) => {
     return {
-        type: actionTypes.FETCH_ORDER_SUCCESS,
+        type: actionTypes.FETCH_ORDER_SUCCESS, //set state loading : false
         orders : orders
     }
 }
 
 export const fetchOrderFail = () => {
     return {
-        type: actionTypes.FETCH_ORDER_FAIL,
+        type: actionTypes.FETCH_ORDER_FAIL //set state loading : false
     }
 }
 
 export const fetchOrders = (token, userId) => {
     return dispatch => {
-        dispatch(fetchOrderStart());
+        dispatch(fetchOrderStart()); //start fetching
         const queryParam = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
         axios.get('/orders.json' + queryParam)
                 .then(response => {
@@ -72,10 +72,10 @@ export const fetchOrders = (token, userId) => {
                        });
 
                     }
-                    dispatch(fetchOrderSuccess(fetchedOrders));
+                    dispatch(fetchOrderSuccess(fetchedOrders)); // finish fetching
                 })
                 .catch(err => {
-                    dispatch(fetchOrderFail());
+                    dispatch(fetchOrderFail()); //finish fetching
                 });
     }
 }

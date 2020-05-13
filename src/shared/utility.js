@@ -5,7 +5,18 @@ export const updateObject = (oldObject, updatedProperties) => {
     }
 }
 
-export const checkValidity = (value, rules) => {    
+export const checkValidity = (value, rules) => {  
+    // So now isValid is updated to True or false 
+    //depending on the check if the trimmed value is unequal
+    // to an empty string
+
+
+    //we can add something to each check
+    // here. We can say isValid should it be true if a check is true
+    // and if isValid already was true
+    // so we change && isValid. If we do
+    // this in every rule, then just one rule resolving to true alone won't do the trick,
+    // all the rules now have to resolve to true.  
     let isValid = true;
     if (!rules) {
         return true;

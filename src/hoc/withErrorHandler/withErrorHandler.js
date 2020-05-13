@@ -35,7 +35,6 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
             //show in browser console, Will Unmount 0 0 , the  0 0 is the ID, the reference
             // of request and response
-            console.log('Will Unmount', this.reqInterceptor,this.resInterceptor);
             axios.interceptors.request.eject(this.reqInterceptor);
             axios.interceptors.response.eject(this.resInterceptor);
         }

@@ -13,7 +13,6 @@ class Orders extends Component {
     componentDidMount () {
         // axios.get('/orders.json')
         //         .then(response => {
-        //             //console.log(response.data);
         //             let fetchedOrders =  [];
         //             for (let key in response.data) {
         //                fetchedOrders.push({
@@ -22,7 +21,6 @@ class Orders extends Component {
         //                });   
         //             }
         //             this.setState({loading:false, orders: fetchedOrders});
-        //             console.log(this.state.orders);
         //         })
         //         .catch(err => {
         //             this.setState({loading:false});

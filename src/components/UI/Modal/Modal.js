@@ -9,10 +9,6 @@ class Modal extends Component {
         // for the second condition check lecture 182 from 7:08 onwards
         return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
     }
-
-    componentDidUpdate(){
-        console.log('[Modal] DidUpdate');
-    }
     render() {
         return (
             <>

@@ -6,7 +6,6 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 const burger =(props) => {
     //complicated algoritm, see lecture 159 to revive the whole concept
-    // console.log(props);
     let transformedIngredients = Object.keys(props.ingredients) //['salad','bacon','cheese','meat'] //get an array of all the keys
     .map(igKey => {
         return [...Array(props.ingredients[igKey])].map((_, i) => { 

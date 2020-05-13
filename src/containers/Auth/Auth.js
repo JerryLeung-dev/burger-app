@@ -62,7 +62,6 @@ class Auth extends Component {
         for (let controlName in updatedControls){
             formIsValid = updatedControls[controlName].valid && formIsValid;
         }
-        // console.log(this.state.orderForm);
         this.setState({controls: updatedControls, formIsValid: formIsValid});
     }
 
@@ -100,7 +99,6 @@ class Auth extends Component {
                 config: this.state.controls[key]
             });
         }
-        // console.log(formElementsArray);
         const errorMessage = (
             <p style={{'color':'red'}}>{this.props.error}</p>
         )

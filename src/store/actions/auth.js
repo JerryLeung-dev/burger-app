@@ -62,12 +62,10 @@ export const auth = (email, password, isSignUp) => {
 
                     dispatch(authSuccess(response.data.idToken, response.data.localId));
                     dispatch(checkAuthTimeout(response.data.expiresIn));
-                    console.log(response.data);
                 })
                 .catch(err =>{
                     dispatch(authFail(err.response.data.error.message))
                     //err here is an object that wraps response. therefore access by err.response
-                    console.log(err.response.data.error.message);
                 })
     }
 }
@@ -92,7 +90,7 @@ export const authCheckState = () => {
             } else {
                 dispatch(authSuccess(token, userId));
                 dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime())/1000));
-                // console.log((expirationDate.getTime() - new Date().getTime())/1000);
+               
             }
         }
 

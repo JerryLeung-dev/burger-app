@@ -11,7 +11,7 @@ import Input from '../../../components/UI/Input/Input';
 //Import hoc error Handler to handle axios request and response.
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../../store/actions/index';
-import { updateObject } from '../../../shared/utility';
+import { updateObject, checkValidity } from '../../../shared/utility';
 
 
 
@@ -130,12 +130,10 @@ class ContactData extends Component {
                 orderData: formData,
                 userId: this.props.userId
         }
-        // console.log(order);
         // axios.post('/orders.json', order)
         // //     //Either the response or error is back, we would want to stop display the loading spinner
         // //     //lecture 182 from 7:08 onwards explain why the spinner doesn't appear
         //     .then(response => {
-        //     //    console.log(response);
         //        this.setState({loading: false});
         //        this.props.history.push('/')
         //     })
@@ -157,46 +155,6 @@ class ContactData extends Component {
     //     this.setState({errorMessage: messageList});
     // } 
 
-    checkValidity(value, rules) {
-    // So now isValid is updated to True or false 
-    //depending on the check if the trimmed value is unequal
-    // to an empty string
-
-
-    //we can add something to each check
-    // here. We can say isValid should it be true if a check is true
-    // and if isValid already was true
-    // so we change && isValid. If we do
-    // this in every rule, then just one rule resolving to true alone won't do the trick,
-    // all the rules now have to resolve to true.
-
-    let isValid = true;
-    if (!rules) {
-        return true;
-    }
-    
-    if (rules.required) {
-        isValid = value.trim() !== '' && isValid;
-    }
-
-    if (rules.minLength) {
-        isValid = value.length >= rules.minLength && isValid
-    }
-
-    if (rules.maxLength) {
-        isValid = value.length <= rules.maxLength && isValid
-    }
-        if (rules.isEmail) {
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid
-        }
-
-        if (rules.isNumeric) {
-            const pattern = /^\d+$/;
-            isValid = pattern.test(value) && isValid
-        }
-        return isValid;
-    }
     //Watch lecture 240 to know better of how to deeply clone an aboject
     
     //inputIdentifiers are the keys of orderForm, check line 120
@@ -207,18 +165,16 @@ class ContactData extends Component {
         //(elementType, elementConfig, value <---- we need this one)
         const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], {
             value: event.target.value,
-            valid: this.checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+            valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
             touched:  true
         });
         const updatedOrderForm = updateObject(this.state.orderForm,{
             [inputIdentifier] : updatedFormElement
         })
-       // console.log(updatedFormElement.valid);
         let formIsValid = true;
         for (let inputIdentifier in updatedOrderForm){
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
         }
-        // console.log(this.state.orderForm);
         this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
 
     }
@@ -231,7 +187,6 @@ class ContactData extends Component {
                 config: this.state.orderForm[key]
             });
         }
-        // console.log(formElementsArray);
         let form = (
             <form onSubmit={this.orderHandler}>
                 {formElementsArray.map(formElement => (
