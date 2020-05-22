@@ -8,6 +8,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
 
 import Spinner from '../../components/UI/Spinner/Spinner';
+import classes from './Orders.module.css'
 
 class Orders extends Component {
     componentDidMount () {
@@ -33,6 +34,7 @@ class Orders extends Component {
         if(!this.props.loading){
             order = 
             <div>
+                <h1 className={classes.OrdersTitle}>Orders</h1>
                 {this.props.orders.map(order=> (
                     <Order 
                         key={order.id}

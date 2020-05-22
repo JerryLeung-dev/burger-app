@@ -4,6 +4,11 @@
 	padding:2px;
 	background: #FFFFFF;
 	margin: 0 auto;
+	color: #716e6e;
+}
+
+.Input > input, select {
+	color: #716e6e;
 }
 
 .Label {
@@ -28,10 +33,10 @@
 }
 
 .Invalid {
-	border-bottom: 2px solid #ff0000;
+	border-bottom: 2px solid #bb5e88;
 }
 
 .ValidationMessage {
-	color: #ff0000;
+	color: #bb5e88;
 	text-align:left;
 }

@@ -5,7 +5,7 @@
     outline: none;
     cursor: pointer;
     font: inherit;
-    padding: 10px;
+    padding: 5px 10px;
     margin: 10px;
     font-weight: bold;
     border-radius: 5px;
@@ -17,29 +17,30 @@
 }
 
 .Success {
-    background-color: aquamarine;
+    background-color: #53709a;
     color: white;
 }
 
 .Success:hover {
-    background-color: #468966;
+    background-color: #465f83;
 }
 
 .Danger {
-    background-color:rgb(238, 85, 68) ;
+    background-color:#bb5e88;
     color:white;
 }
 
 .Danger:hover {
-    background-color: #A61E08 ;
+    background-color: #b15981;
 }
 
 .Button:disabled {
-    background-color:#b8ddc9;
+    background-color:#8bb2ea;
     /* color:#ccc; */
     cursor: not-allowed;
+    color: white;
 }
 
 .Danger:disabled {
-    background-color:salmon;
+    background-color:#d62977;
 }

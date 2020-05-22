@@ -1,0 +1,14 @@
+.OrderSummary {
+    color: #716e6e;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+
+.OrderSummary h3 {
+    text-transform: uppercase;
+    font-family: 'Open Sans';
+}
+
+.OrderSummary button{
+    font-family: 'Open Sans';
+}

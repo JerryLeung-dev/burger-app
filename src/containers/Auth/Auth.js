@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
+
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import classes from './Auth.module.css';
@@ -119,10 +120,11 @@ class Auth extends Component {
                             message = {formElement.id}                        
                         />
                     ))}
-                    <Button btnType="Success" 
+                    <Button btnType="Danger"
                             // disabled={!this.state.formIsValid} 
                             clicked={this.signUpHandler}>Sign Up</Button>
-                    <Button btnType="Danger" 
+                    <Button 
+                            btnType="Success"
                             // disabled={!this.state.formIsValid}
                             clicked={this.signInHandler}>Sign In</Button>
                 </form>

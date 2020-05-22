@@ -5,11 +5,17 @@
     box-shadow: 0 2px 3px #ccc;
     border: 1px solid #eee;
     box-sizing: border-box;
+
+    color: #716e6e;
 }
 
 .Input {
     display: block;
-    margin: auto;
+    margin:auto;
+}
+
+.Button {
+    margin: 10px;
 }
 
 @media (min-width: 600px) {
