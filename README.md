@@ -1,4 +1,4 @@
-Live Demo : https://learntolivealone.github.io/BootstrapWithAnimation/
+Live Demo : https://react-my-bugger-7b8f8.firebaseapp.com/
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
