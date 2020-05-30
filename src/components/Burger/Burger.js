@@ -20,7 +20,7 @@ const burger =(props) => {
     },[]);
 
     if (transformedIngredients.length === 0 ) {
-        transformedIngredients = <p style={{'color':'#716e6e'}}>Please start adding ingredients!</p>
+        transformedIngredients = <p style={{'color':'#69717b'}}>Please start adding ingredients!</p>
     }
     return(
         <div className ={classes.Burger}>

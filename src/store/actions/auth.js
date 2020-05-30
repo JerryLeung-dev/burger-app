@@ -39,6 +39,11 @@ export const checkAuthTimeout = (expirationTime) => {
     }
 }   
 
+export const redirectToAuth = () =>{
+    return {
+        type: actionTypes.REDIRECT_TO_AUTH,
+    }
+}
 export const auth = (email, password, isSignUp) => {
     return dispatch => {
         dispatch(authStart());
@@ -51,7 +56,8 @@ export const auth = (email, password, isSignUp) => {
         if(!isSignUp) {
             url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCzORAYzq9paQGiZTuz79eJagO_3azxJKM';//sign in url
         }
-        axios.post(url, authData)
+        if(!isSignUp){
+            axios.post(url, authData)
                 .then(response => {
                     //current time + expiration time ( 3600 )
                     //turn it into a date object
@@ -67,6 +73,18 @@ export const auth = (email, password, isSignUp) => {
                     dispatch(authFail(err.response.data.error.message))
                     //err here is an object that wraps response. therefore access by err.response
                 })
+        }
+        if(isSignUp) {
+            axios.post(url,authData)
+                    .then(response => {
+                        dispatch(redirectToAuth());
+                    })
+                    .catch(err =>{
+                        dispatch(authFail(err.response.data.error.message))
+                        //err here is an object that wraps response. therefore access by err.response
+                    })
+        }
+        
     }
 }
 

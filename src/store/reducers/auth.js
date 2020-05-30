@@ -6,7 +6,8 @@ import { updateObject } from '../../shared/utility';
     userId: null,
     loading: false,
     error: null,
-    authRedirectPath: '/'
+    authRedirectPath: '/',
+    redirectToAuth: false
 }
 
 const authStart = (state, action) => {
@@ -20,7 +21,8 @@ const authSuccess = (state, action) => {
     return updateObject(state, {
         loading: false,
         idToken: action.idToken,
-        userId: action.userId
+        userId: action.userId,
+        redirectToAuth: false
     })
 }
 
@@ -44,6 +46,13 @@ const setAuthRedirectPath = (state, action) => {
     })
 }
 
+const redirectToAuth = (state,action) => {
+    return updateObject(state, {
+        redirectToAuth: true,
+        loading: false
+    })
+}
+
 const reducer = ( state =initialState, action ) => {
     switch(action.type) {
         case actionTypes.AUTH_START:
@@ -56,6 +65,8 @@ const reducer = ( state =initialState, action ) => {
             return authLogout(state, action);
         case actionTypes.SET_AUTH_REDIRECT_PATH:
             return setAuthRedirectPath(state, action);
+        case actionTypes.REDIRECT_TO_AUTH:
+            return redirectToAuth(state, action);
         default:
             return state;
     }

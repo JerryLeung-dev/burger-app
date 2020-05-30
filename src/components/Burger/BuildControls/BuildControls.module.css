@@ -6,9 +6,11 @@
 .Backdrop {
     width:100%;
     height:100%;
-    background-color:rgba(99, 99, 99, 0.4);
-
+    background: linear-gradient(227deg, #264d86, #bb5e88);
+    /* background: rgb(187,94,136);
+    background: radial-gradient(circle, rgba(187,94,136,1) 25%, rgba(38,77,134,1) 100%);} */
 }
+
 .BuildControls {
     width: 100%;
     background-color: white;
@@ -29,7 +31,7 @@
 
 .Price {
     font-size: 20px;
-    color:#716e6e;
+    color:rgb(105, 113, 123);
 }
 .OrderButton {
     background-color: #53709a ;
@@ -74,10 +76,10 @@
 
 @media (min-width:500px) {
     .backgroundImage{
-        background-image: url('../../../assets/homepage-background.jpg');
+        background-color:#F2F2F2;
         background-position: center;
         background-size: cover;
-        height:500px;
+        height:470px;
         display:flex;
         justify-content: center;
         align-items: center;

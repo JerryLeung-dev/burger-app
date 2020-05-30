@@ -9,7 +9,7 @@
 }
 
 .NavigationItem a {
-    color: #716e6e;
+    color: rgb(105, 113, 123);
     text-decoration: none;
     width: 100%;
     box-sizing: border-box;
@@ -34,7 +34,7 @@
     }
     
     .NavigationItem a {
-        color: #716e6e;
+        color: rgb(105, 113, 123);
         height: 100%;
         padding: 16px 10px;
         border-bottom: 4px solid transparent;
@@ -44,6 +44,6 @@
     .NavigationItem a:active,
     .NavigationItem a.active {
         border-bottom: 4px solid #53709a;
-        color: #716e6e;
+        color: rgb(105, 113, 123);
     }
 }
